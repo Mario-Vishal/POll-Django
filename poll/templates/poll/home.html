@@ -1,0 +1,28 @@
+{% extends 'poll/base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    {% for poll in polls %}
+    <div class="poll-card">
+        <h1>{{poll.poll_question}}</h1>
+        <p>by {{poll.user.username}}</p>
+        <p>{{poll.poll_date}}</p>
+        <form action="{% url 'polldetail' poll.id %}" method="post">
+            {% csrf_token %}  
+            <button type="submit">vote</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>
+
+{% endblock %}

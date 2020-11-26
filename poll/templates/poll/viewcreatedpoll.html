@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+    <div class="poll-card">
+        <h1>{{poll.poll_question}}</h1>
+
+        {% for option in options %}
+            <li>{{option.name}} - {{option.votes}}<div class="vote-bar" style="width: '{{option.votes}}';"></div></li>
+        {% endfor %}
+
+    </div>
+    
+</body>
+</html>

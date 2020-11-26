@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <h2>logged in as {{user.username}}</h2>
+
+        <a href="{% url 'createpoll' %}">create</a>
+        <a href="{% url 'logoutuser' %}">logout</a>
+
+    {% else %}
+
+        <a href="{% url 'signupuser' %}">Signup</a>
+        <a href="{% url 'loginuser' %}">login</a>
+
+    {% endif %}
+
+    {% block content %}
+
+    {% endblock %}
+
+</body>
+</html>

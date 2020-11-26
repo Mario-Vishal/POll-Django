@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>create poll</h1>
+
+    {% if error %}
+    <h2>{{error}}</h2>
+    {% endif %}
+    <form action="" method="POST" id="poll-create">
+
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+        <p>
+            <label for="id_option_number">number of options:</label>
+            <input type="number" name="option_number" value="2" required="" id="id_option_number" min="2">
+            <button name="btn-add" id="btn-add" onclick="this.form.submit()">add</button>
+            
+        </p>
+
+        <label for="id_poll_question">Poll question:</label>
+        <textarea name="poll_question" cols="40" rows="10" required="" id="id_poll_question"></textarea>
+        
+        <div id="dynamic-form">
+            {{form1.as_p}}
+        </div>
+
+
+        <button type="submit">create</button>
+        
+
+    </form>
+</body>
+</html>

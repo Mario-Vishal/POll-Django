@@ -1,0 +1,28 @@
+{% extends 'poll/base.html' %}
+
+{% block content %}
+    {% if error %}
+    <h3>{{error}}</h3>
+    {% endif %}
+    
+<form class="signup-div-form" method="POST">
+    {% csrf_token %}
+
+    
+    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username" placeholder="Username">
+    <br> 
+    <input type="email" name="email" maxlength="254" id="id_email" placeholder="your email">
+    <br> 
+    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="password">
+    <br> 
+    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="re-type password">
+    <br> 
+
+    <button class="submit-btn" type="submit">
+        sign up
+    </button>
+</form>
+{% endblock %}
+
+
+<!-- {{form.as_p }} -->

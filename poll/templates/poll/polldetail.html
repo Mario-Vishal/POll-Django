@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <div>
+        <h1>{{poll.poll_question}}</h1>
+
+        {% if not display %}
+        <form action="" method="POST">
+            {% csrf_token %}
+        {% for option in options %}
+        
+            <input type="radio" id="{{option.id}}" name="vote-option" value="{{option.id}}">{{option.name}}
+            
+        {% endfor %}
+        <button type="submit">vote</button>
+    </form>
+    {% else %}
+
+    <div class="poll-card">
+        <h1>{{poll.poll_question}}</h1>
+
+        {% for option in options %}
+            <li>{{option.name}} - {{option.votes}}</li>
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+    </div>
+</body>
+</html>
