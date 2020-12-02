@@ -9,8 +9,8 @@
 </head>
 <body>
     <div>
+        
         <h1>{{poll.poll_question}}</h1>
-
         {% if not display %}
         <form action="" method="POST">
             {% csrf_token %}
@@ -33,6 +33,10 @@
     </div>
 
     {% endif %}
+
+    
     </div>
+
+    <a href="{% url 'home' %}">back</a>
 </body>
 </html>

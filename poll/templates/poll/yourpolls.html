@@ -1,0 +1,33 @@
+{% extends 'poll/base.html' %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if polls %}
+    {% for poll in polls %}
+    <div class="poll-card">
+        <h1>{{poll.poll_question}}</h1>
+        <p>by {{poll.user.username}}</p>
+        <p>{{poll.poll_date}}</p>
+        <form action="{% url 'polldetail' poll.id %}" method="post">
+            {% csrf_token %}  
+            <button type="submit">vote</button>
+        </form>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div>
+        <h1>You have not created your polls yet</h1>
+    </div>
+    {% endif %}
+</body>
+</html>
+
+{% endblock %}

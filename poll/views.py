@@ -20,9 +20,7 @@ import re
 def home(request):
     
     polls = Poll.objects.all().order_by('-poll_date')
-    # voted = PollVoted.objects.filter(user=request.user).all()
-    # for i in voted:
-    #     print(i.voted)
+
     if request.user.is_authenticated:
         return render(request,"poll/home.html",{'polls':polls})
 
@@ -215,6 +213,13 @@ def ifFormPost(forms):
         return False
 
 
-def viewcreatedpoll(request,poll_pk):
-    pass
+
+
+
+def yourpolls(request):
+
+    user_polls = Poll.objects.filter(user = request.user).all()
+
+
+    return render(request,'poll/yourpolls.html',{'polls':user_polls})
 

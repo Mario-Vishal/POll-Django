@@ -22,8 +22,11 @@ urlpatterns = [
     path('',views.home,name="home"),
     path('polldetail/<int:poll_pk>',views.polldetail,name="polldetail"),
     path('createpoll',views.createpoll,name="createpoll"),
-    path('viewcreatedpoll/<int:poll_pk>',views.viewcreatedpoll,name="viewcreatedpoll"),
     path('signupuser',views.signupuser,name="signupuser"),
     path('loginuser',views.loginuser,name="loginuser"),
-    path('logoutuser',views.logoutuser,name="logoutuser")
+    path('logoutuser',views.logoutuser,name="logoutuser"),
+    path('yourpolls',views.yourpolls,name="yourpolls")
 ]
+
+
+#path('viewcreatedpoll/<int:poll_pk>',views.viewcreatedpoll,name="viewcreatedpoll"),

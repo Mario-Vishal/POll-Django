@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 class Poll(models.Model):
@@ -7,7 +8,9 @@ class Poll(models.Model):
     poll_question  = models.TextField()
     option_number = models.IntegerField(default=2)
     poll_date = models.DateTimeField(auto_now_add=True)
+    poll_end_date = models.TimeField
     user = models.ForeignKey(User,on_delete=models.CASCADE)
+    
     
 
     def __str__(self):
