@@ -5,25 +5,34 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-class PollForm(ModelForm):
+class PollForm(forms.ModelForm):
+    poll_question = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder':'Type your poll question here!',
+        'class':'poll-section row'
+        }), label='')
+    class Meta:
+        model = Poll
+
+        fields = [
+            'poll_question'
+        ]
+
+
+class OptionsForm(forms.ModelForm):
+
+    name = forms.CharField(label='',widget=forms.TextInput(attrs={
+    'class':'option-form',
+    'placeholder':'your option',
+    'required':True}))
 
     class Meta:
 
-        model = Poll
+        model = Options
 
-        fields = ['poll_question','option_number']
+        fields = [
+            'name'
+        ]
 
-
-class OptionsForm(forms.Form):
-
-    name = forms.CharField(
-        label = "option",
-        widget = forms.TextInput(attrs={
-            'placeholder':'type option',
-            'required':True,
-            'class':'option-form'
-        })
-    )
 
 class SignUpForm(UserCreationForm):
 
@@ -45,7 +54,7 @@ class SignUpForm(UserCreationForm):
 
 
 
-# OptionsFormset = formset_factory(OptionsForm,extra=2)
+OptionsFormset = formset_factory(OptionsForm,extra=1)
 
     
 

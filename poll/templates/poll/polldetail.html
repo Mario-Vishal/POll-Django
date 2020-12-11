@@ -8,23 +8,33 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <div>
+    <div class="card border-style">
         
-        <h1>{{poll.poll_question}}</h1>
+        <h1 class="card-title">{{poll.poll_question}}</h1>
         {% if not display %}
-        <form action="" method="POST">
-            {% csrf_token %}
-        {% for option in options %}
-        
-            <input type="radio" id="{{option.id}}" name="vote-option" value="{{option.id}}">{{option.name}}
+        <div class="input-group">
+            <form action="" method="POST">
+                {% csrf_token %}
+            {% for option in options %}
+            <label class="input-group-text p radio-div">
+                <input type="radio" id="{{option.id}}" name="vote-option" value="{{option.id}}"> 
+                <div class="radio-group">
+                    {{option.name}}
+                </div>
+            </label>
             
-        {% endfor %}
-        <button type="submit">vote</button>
-    </form>
-    {% else %}
+                
+            {% endfor %}
 
-    <div class="poll-card">
-        <h1>{{poll.poll_question}}</h1>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg">vote</button>
+    </form>
+    
+    {% else %}
+    <h1 class="card-title">{{poll.poll_question}}</h1>
+    <div class="card-body">
+        
 
         {% for option in options %}
             <li>{{option.name}} - {{option.votes}}</li>

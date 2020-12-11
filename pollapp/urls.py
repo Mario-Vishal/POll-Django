@@ -25,7 +25,9 @@ urlpatterns = [
     path('signupuser',views.signupuser,name="signupuser"),
     path('loginuser',views.loginuser,name="loginuser"),
     path('logoutuser',views.logoutuser,name="logoutuser"),
-    path('yourpolls',views.yourpolls,name="yourpolls")
+    path('yourpolls',views.yourpolls,name="yourpolls"),
+    path('deletepoll/<int:poll_pk>',views.deletepoll,name="deletepoll"),
+
 ]
 
 

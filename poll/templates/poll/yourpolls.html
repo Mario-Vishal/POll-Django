@@ -12,15 +12,49 @@
 <body>
     {% if polls %}
     {% for poll in polls %}
-    <div class="poll-card">
+    <!-- <div class="poll-card">
         <h1>{{poll.poll_question}}</h1>
         <p>by {{poll.user.username}}</p>
         <p>{{poll.poll_date}}</p>
         <form action="{% url 'polldetail' poll.id %}" method="post">
             {% csrf_token %}  
-            <button type="submit">vote</button>
-        </form>
+            <button type="submit" name="action" value="vote">vote</button>
+        </form> -->
+
+        <div class="card border-style">
+        
+            <h1 class="card-title">{{poll.poll_question}}</h1>
+        
+        
+        <div class="card-body poll-home-detail">
+            <p class="card-subtitle text-muted">by {{poll.user.username}}</p>
+            <p class="card-subtitle text-muted">{{poll.poll_date}}</p>
+        </div>
+        
+        <div class="card-body poll-home-detail">
+            <h4 class="card-subtitle text-muted">Number of options:  {{poll.option_number}}</h4>
+        
+            <div class="card-body poll-home-detail">
+                <form action="{% url 'polldetail' poll.id %}" method="post">
+                    {% csrf_token %}  
+                    <button type="submit" class="btn btn-primary ct-btn">vote</button>
+                </form>
+                <form action="{% url 'deletepoll' poll.id %}" method="post">
+                    {% csrf_token %}  
+                    <button type="submit" class="btn btn-danger ct-btn">delete</button>
+                </form>
+            </div>
+            
+
+        </div>
+
+        
     </div>
+
+        
+
+
+    
     {% endfor %}
     {% else %}
     <div>

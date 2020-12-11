@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404,HttpResponseRedirect
 from .models import Options, Poll, PollVoted
-from django.forms import formset_factory
+from django.forms import inlineformset_factory
 
 #auth
 from django.contrib.auth.models import User
@@ -12,7 +12,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
 #custom forms
-from .forms import PollForm,OptionsForm, SignUpForm
+from .forms import PollForm,OptionsForm, SignUpForm,OptionsFormset
 
 import re
 
@@ -94,7 +94,6 @@ def polldetail(request,poll_pk):
     
     if request.method == "POST":
 
-        
         display=False
 
         poll = Poll.objects.get(pk=poll_pk)
@@ -106,9 +105,6 @@ def polldetail(request,poll_pk):
             
             return render(request,"poll/polldetail.html",{'poll':poll,'options':options,'display':display,'total':total})
         
-        
-        
-
         selected_option =  request.POST.get('vote-option')
         if selected_option:
             # option = Options.objects.get(poll_id=poll_pk,pk=selected_option)
@@ -127,14 +123,15 @@ def polldetail(request,poll_pk):
             display=True
         options = Options.objects.filter(poll_id=poll_pk)
         total=calTotal(options)
-        
-        
 
         return render(request,"poll/polldetail.html",{'poll':poll,'options':options,'display':display,'total':total})
 
     else:
-
-        return redirect('home')
+        display=False
+        poll = Poll.objects.get(pk=poll_pk)
+        options = Options.objects.filter(poll_id=poll_pk)
+        total=calTotal(options)
+        return render(request,"poll/polldetail.html",{'poll':poll,'options':options,'display':display,'total':total})
 
 def calTotal(options):
     total=0
@@ -158,42 +155,36 @@ def hasVoted(pk,user):
 
 
 def createpoll(request):
-    OptionsFormset = formset_factory(OptionsForm,extra=2)
-    error=''
-
+   
+ 
+    if request.method=="GET":
+        formset = OptionsFormset(request.GET or None)
+    
     if request.method=="POST":
 
-        val = int(request.POST.get('option_number'))
-        print(val)
-        forms = OptionsFormset(request.POST)
-
         
-        pollQuestion = request.POST.get('poll_question')
-        if ifFormPost(forms) and  pollQuestion:
-
-            poll = Poll.objects.create(poll_question=pollQuestion,option_number=val,user=request.user)
+        formset = OptionsFormset(request.POST)
+        if not len(formset)>=2:
+            error="should have atleast 2 options"
             
-            for form in forms:
-                name = form.cleaned_data.get('name')
-                votes=0
-                options = Options(poll_id = poll,name=name,votes=votes)
-                options.save()
+            return render(request,"poll/createpoll.html",{'form':PollForm(),'formset':formset,'error':error})
+
+        poll = Poll.objects.create(user=request.user)
+        if formset.is_valid():
+            q = request.POST.get('poll_question')
+            poll.poll_question = q
+            poll.option_number = len(formset)
             poll.save()
-
-            return redirect('home')
             
-        else:
-            if val<=7 and val>=2:            
-
-                OptionsFormset = formset_factory(OptionsForm,extra=val)
-            else:
-                error="minimum of 2 options and maximum of 7 options are allowed"
-
-
-            return render(request,"poll/createpoll.html",{'form':PollForm(),'form1':OptionsFormset(),'error':error})
-        # return HttpResponseRedirect(request.path_info)
-
-    return render(request,"poll/createpoll.html",{'form':PollForm(),'form1':OptionsFormset()})
+            for form in formset:
+            
+                name = form.cleaned_data.get('name');
+                op = Options(poll_id=poll,name=name)
+                op.save()
+            
+            return redirect('polldetail',poll.id)
+        
+    return render(request,"poll/createpoll.html",{'form':PollForm(),'formset':formset})
 
 
 def ifFormPost(forms):
@@ -219,7 +210,14 @@ def ifFormPost(forms):
 def yourpolls(request):
 
     user_polls = Poll.objects.filter(user = request.user).all()
-
-
+    
     return render(request,'poll/yourpolls.html',{'polls':user_polls})
+
+
+def deletepoll(request,poll_pk):
+
+    poll = get_object_or_404(Poll,pk=poll_pk,user = request.user)
+    poll.delete()
+    
+    return redirect('yourpolls')
 

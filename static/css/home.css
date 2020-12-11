@@ -1,3 +1,7 @@
+body {
+    position: relative;
+}
+
 .poll-card {
 
 
@@ -19,7 +23,75 @@
     
 }
 
+.border-style {
+    border: 1px solid gray;
+    padding: 1.5rem;
+    width: 40%;
+    margin: 1rem;
+}
+
 a {
     margin: 2rem;
     color: red;
+}
+
+.ct-btn {
+    margin: 0.5rem;
+}
+
+.create-field{
+    margin: 3rem;
+    
+}
+
+.poll-home-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.option-form {
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+
+
+.add-more-btn {
+    
+    margin: 1rem;
+    
+}
+
+.poll-option-detail {
+    display: flex;
+    border: 1px solid black;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.3rem;
+    
+    justify-content: center;
+}
+
+.radio-div {
+    text-align: center;
+    display: block;
+    border: 1px solid black;
+    border-radius: 0.3rem;
+    font-size: large;
+    margin: 0.5rem;
+    padding: 10px;
+}
+
+.radio-div > input {
+    visibility: hidden;
+    position: absolute;
+}
+
+.radio-div > input + div {
+    cursor: pointer;
+}
+
+.radio-div > input:checked + div {
+    background-color: rgb(28, 247, 174);
+    border: 1px solid rgb(0, 133, 0);
 }
