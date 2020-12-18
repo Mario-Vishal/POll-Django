@@ -5,6 +5,6 @@ A django application where a user can create his/her own account and create poll
 ## Improvements To be Done
 
 - styling
-- updating and deleting a poll
+- ~~deleting a user's poll~~
 - adding duration to a poll
 - adding category to polls
