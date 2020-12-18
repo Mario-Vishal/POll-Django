@@ -58,7 +58,7 @@ mario.disabled = true;
 $(document).on('click', '.add-form-row', function(e){
     e.preventDefault();
     cloneMore('.form-row:last', 'form');
-   console.log(getOptionFieldLength());
+   
     if (getOptionFieldLength()>=2){
         mario.disabled=false;
     }
